@@ -1,0 +1,32 @@
+# @package _global_
+# Eval ddppo с чекпонтов в val_mini
+defaults:
+  - /benchmark/nav/pointnav: pointnav_mp3d
+  - /habitat_baselines: habitat_baselines_rl_config_base
+  - _self_
+
+habitat:
+  dataset:
+    scenes_dir: /data/scene_datasets
+    data_path:  /data/datasets/pointnav/val_mini_prepared/val_mini_100/val_mini_100.json.gz
+  gym:
+    obs_keys: [depth, pointgoal_with_gps_compass] # беру с определения ddppo
+
+habitat_baselines:
+  trainer_name: ddppo
+  num_environments: 1
+  test_episode_count: -1 # беру все
+  load_resume_state_config: False
+  eval_ckpt_path_dir: /data/ddppo-models/converted/gibson-2plus-resnet50.pth
+  tensorboard_dir: /data/ddppo_out/eval/tb
+  video_dir: /data/ddppo_out/eval/videos
+  log_file: /data/ddppo_out/eval/eval.log
+  rl:
+    policy:
+      name: PointNavResNetPolicy
+    ppo:
+      hidden_size: 512
+    ddppo:
+      backbone: resnet50
+      rnn_type: LSTM
+      num_recurrent_layers: 2
