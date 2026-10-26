@@ -1,6 +1,6 @@
 IMAGE="${IMAGE:-ddppo-eval:v1}"
 DATA_DIR="${DATA_DIR:-$HOME/TopoSLAM/prism_topomap_semantic_docker/data}"
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 DOCKER_ARGS=(
   --rm
