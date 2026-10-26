@@ -18,7 +18,6 @@ python -u /opt/ddppo_eval/eval_with_csv.py --run-type eval --exp-config /opt/ddp
   habitat.dataset.data_path=/data/datasets/pointnav/val_mini_prepared/$DATASET/$DATASET.json.gz \
   habitat_baselines.eval_ckpt_path_dir=/data/ddppo-models/converted/$MODEL.pth \
   "habitat_baselines.eval.video_option=[disk]" \
-  habitat_baselines.num_environments=5 \
   habitat_baselines.tensorboard_dir="$OUT/tb" \
   habitat_baselines.video_dir="$OUT/video" \
   habitat_baselines.log_file="$OUT/eval.log" \
