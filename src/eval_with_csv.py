@@ -2,12 +2,6 @@
 # надстройка поверх habitat run для просмотра каждого эпизода, написал для этого хук
 
 import csv, os
-import habitat_baselines.rl.ppo.ppo_trainer as T
-from habitat_baselines.run import main
-
-CSV, SAVE_VIDEO = os.environ["EPISODE_CSV"], os.environ.get("SAVE_VIDEO") == "1"
-orig_generate_video = T.generate_video
-
 
 def generate_video_hook(**kw):
     row = {"episode_id": kw["episode_id"], "num_steps": len(kw["images"]), **kw["metrics"]}
@@ -21,5 +15,11 @@ def generate_video_hook(**kw):
         orig_generate_video(**kw)
 
 
-T.generate_video = generate_video_hook
-main()
+if __name__ == "__main__":
+    import habitat_baselines.rl.ppo.ppo_trainer as T
+    from habitat_baselines.run import main
+
+    CSV, SAVE_VIDEO = os.environ["EPISODE_CSV"], os.environ.get("SAVE_VIDEO") == "1"
+    orig_generate_video = T.generate_video
+    T.generate_video = generate_video_hook
+    main()
